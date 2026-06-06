@@ -1,13 +1,12 @@
 'use client'
-// import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { cn } from "@/lib/utils";
 import { DotPattern } from "@/components/ui/dot-pattern";
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import Image from "next/image";
 import { ArrowRight } from 'lucide-react';
-import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
+import { motion } from 'motion/react'
+import { GitHubCalendar } from 'react-github-calendar';
 
 const TOGGLE_CLASSES =
   "text-sm font-medium flex items-center gap-2 px-3 md:pl-3 md:pr-3.5 py-3 md:py-1.5 transition-colors relative z-10";
@@ -19,7 +18,7 @@ const theme = {
 
 export default function Home() {
 
-  const [selected, setSelected] = useState<"dark" | "light">("light");
+  const [selected, setSelected] = useState<"dark" | "light">("dark");
 
   return (
     <div className="relative flex h-screen w-screen flex-col items-center justify-center overflow-hidden rounded-lg border font-mono" style={{ backgroundColor: theme[selected].patternbgColor }}>
@@ -27,10 +26,10 @@ export default function Home() {
         <div className="grid grid-cols-5 gap-3 row-span-3">
           <div className="grid col-span-4 grid-rows-2 gap-3">
             <div className="grid grid-cols-4 gap-3">
-              <div className="col-span-2 rounded-xl border-2 border-[#212121] flex flex-col justify-center items-center text-start px-6">
-                <p className="text-lg font-semibold w-full" style={{ color: theme[selected].titleTxt }}>Hi, Im Uttkarsh</p>
+              <motion.div initial={{ opacity: 0, scale: 2, filter: "blur(10px)" }} whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }} transition={{ duration: 0.5 }} className="col-span-2 rounded-xl border-2 border-[#212121] flex flex-col justify-center items-center text-start px-6">
+                <p className="text-lg font-semibold w-full" style={{ color: theme[selected].titleTxt }}>Hi, I'm Echo</p>
                 <p className="text-[13px] mt-1 font-light w-full" style={{ color: theme[selected].secondaryText }}>Full-stack developer building backend systems, developer tools, and AI-powered applications while exploring scalable software architecture.</p>
-              </div>
+              </motion.div>
               <div className="col-span-1 rounded-xl border-2 border-[#212121] flex justify-center items-center">
                 <span className="flex flex-col items-center">
                   <Image height={60} width={60} alt="project-icon" className="rounded-full px-2 py-2 bg-[#222222]" src={'/school-bag.png'}></Image>
@@ -113,8 +112,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="col-span-1 grid grid-rows-4 gap-3">
-            <div className="row-span-1 rounded-xl border-2 border-[#212121]">hello</div>
+          <div className="col-span-1 grid grid-rows-5 gap-3">
+            <div className="row-span-2 rounded-xl border-2 border-[#212121] overflow-hidden flex justify-center items-center px-2">
+              <GitHubCalendar showTotalCount={false} showWeekdayLabels={false} showColorLegend={false} username="Hello-Utkarsh" className="h-fit w-fit" />
+            </div>
             <div className="row-span-2 rounded-xl border-2 border-[#212121]">hello</div>
             <div className="row-span-1 rounded-xl border-2 border-[#212121] flex justify-center items-center overflow-hidden">
               <div
