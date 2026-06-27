@@ -37,10 +37,8 @@ export async function GET(request) {
                     })
             );
 
-            // console.log(blog.path, blogDesc)
             return { ...blog, description: desc, ...metadata }
         }))
-        console.log(blogDesc.sort((a, b) => b.date.localeCompare(a.date)))
         return NextResponse.json(blogDesc);
     } catch (error) {
         console.log(error)

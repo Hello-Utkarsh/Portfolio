@@ -7,6 +7,7 @@ interface ThemeColors {
     socialIcnBg: string;
     socialIcnClr: string;
     techIcn: string;
+    typography: any;
 }
 
 export interface ThemeConfig {
