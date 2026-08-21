@@ -29,7 +29,7 @@ export default function Blog({ selected, page, setPage, theme }: { selected: 'da
                 animate={{ opacity: 1, scale: 1, transition: { type: "tween", ease: "easeOut", duration: 1, delay: 0.5 } }}
                 exit={{ opacity: 0, scale: 0.9, y: -40, x: 40 }}
                 transition={{ duration: 1 }}
-                className="h-11/12 w-11/12 lg:h-9/12 lg:w-8/12 hidden landscape:grid absolute z-10 top-1/24 lg:top-[12.5%] p-2 rounded-xl shadow-[0px_4px_16px_rgba(107,114,128,0.3),0px_8px_24px_rgba(107,114,128,0.3),0px_16px_56px_rgba(107,114,128,0.3)]" style={{ backgroundColor: theme[selected].bgColor }}>
+                className="portrait:min-h-160 portrait:w-[95vh] portrait:top-[97.5%] portrait:translate-x-[5%] portrait:left-0 portrait:origin-top-left portrait:-rotate-90 absolute h-11/12 w-11/12 lg:h-9/12 lg:w-8/12 grid z-10 top-1/24 lg:top-[12.5%] p-2 rounded-xl shadow-[0px_4px_16px_rgba(107,114,128,0.3),0px_8px_24px_rgba(107,114,128,0.3),0px_16px_56px_rgba(107,114,128,0.3)]" style={{ backgroundColor: theme[selected].bgColor }}>
                 <button onClick={() => setPage('home')} className="bg-[#212121] z-20 absolute top-0 w-fit rounded-full p-1 mt-3.5 ml-1.5 self-start flex hover:scale-125 transition hover:rotate-45 cursor-pointer" >
                     <ArrowLeft color="white" />
                 </button>
@@ -39,7 +39,7 @@ export default function Blog({ selected, page, setPage, theme }: { selected: 'da
                     <BlogBanner theme={theme} selected={selected} title={blogs[0]?.title} description={blogs[0]?.description} tags={blogs[0]?.tags} date={blogs[0]?.date} />
                     <p className="text-gray-500 text-sm font-medium min-[724px]:text-base mt-8">More Posts</p>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
-                        {blogs.slice(1).map((blog) => {
+                        {blogs?.slice(1).map((blog) => {
                             console.log(blog.path)
                             return (
                                 <BlogCard key={blog.path} path={blog.path} theme={theme} selected={selected} title={blog.title} description={blog.description} tags={blog.tags} date={blog.date} />

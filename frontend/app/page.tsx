@@ -20,7 +20,7 @@ const TOGGLE_CLASSES =
 const typography = {
   heading: "text-base font-semibold lg:text-base font-bold",
   subHeading: "text-sm font-medium lg:font-semibold lg:text-sm",
-  descPara: "text-xs font-medium xl:text-[13px] lg:text-xs lg:font-semibold"
+  descPara: "text-xs sm:font-medium xl:text-[13px] lg:text-xs lg:font-semibold"
 }
 
 const theme: ThemeConfig = {
@@ -36,10 +36,12 @@ export default function page() {
   const [selected, setSelected] = useState<"dark" | "light">("light");
 
   return (
-    <div className="relative flex justify-center h-screen w-screen rounded-lg border font-mono scroll-container overflow-y-auto min-h-136" style={{ backgroundColor: theme[selected].patternbgColor }}>
-      <Home selected={selected} setSelected={setSelected} page={page} setPage={setPage} />
-      <Project selected={selected} page={page} setPage={setPage} theme={theme} />
-      <Blog selected={selected} page={page} setPage={setPage} theme={theme} />
+    <div className="h-screen w-screen rounded-lg border font-mono scroll-container overflow-scroll" style={{ backgroundColor: theme[selected].patternbgColor }}>
+      <div className="h-full portrait:min-w-3xl w-full overflow-auto relative flex justify-center items-center">
+        <Home selected={selected} setSelected={setSelected} page={page} setPage={setPage} />
+        <Project selected={selected} page={page} setPage={setPage} theme={theme} />
+        <Blog selected={selected} page={page} setPage={setPage} theme={theme} />
+      </div>
       <DotPattern
         className={cn(
           "h-full w-full mask-[radial-gradient(1000px_circle_at_center,white,transparent)]",
@@ -60,7 +62,7 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
         animate={{ opacity: 1, scale: 1, transition: { type: "tween", ease: "easeOut", duration: 1, delay: 0.5 } }}
         exit={{ opacity: 0, scale: 0.9, y: -40, x: 40 }}
         transition={{ duration: 1 }}
-        className="h-11/12 w-11/12 lg:h-9/12 lg:w-8/12 hidden landscape:grid rounded-xl grid-rows-5 z-10 text-white p-2 gap-3 absolute top-1/24 lg:top-[12.5%] shadow-[0px_4px_16px_rgba(107,114,128,0.3),0px_8px_24px_rgba(107,114,128,0.3),0px_16px_56px_rgba(107,114,128,0.3)]" style={{ backgroundColor: theme[selected].bgColor }}>
+        className="portrait:min-h-160 portrait:w-[95vh] portrait:top-[97.5%] portrait:translate-x-[5%] portrait:left-0 portrait:origin-top-left portrait:-rotate-90 absolute lg:h-9/12 lg:w-8/12  grid rounded-xl grid-rows-5 z-10 text-white p-2 gap-3 lg:top-[12.5%] shadow-[0px_4px_16px_rgba(107,114,128,0.3),0px_8px_24px_rgba(107,114,128,0.3),0px_16px_56px_rgba(107,114,128,0.3)]" style={{ backgroundColor: theme[selected].bgColor }}>
         <div className="grid grid-cols-5 gap-2 lg:gap-3 row-span-3">
           <div className="grid col-span-4 grid-rows-2 gap-2 lg:gap-3">
             <div className="grid grid-cols-4 gap-3">
@@ -75,7 +77,9 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
                 </span>
               </div>
               <div className="col-span-1 rounded-xl border-2 border-[#212121] overflow-hidden">
-                <ProjectCard theme={theme} selected={selected} />
+                <a href="https://github.com/Hello-Utkarsh/AutoDocs" target='_blank'>
+                  <ProjectCard name="Autodocs" description="Helps to document all your learning and automate the task of posting it to different platforms" img="/autodocs-banner.png" theme={theme} selected={selected} />
+                </a>
               </div>
             </div>
             <div className="grid grid-cols-4 gap-3">
@@ -101,13 +105,13 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
                   </span>
                 </Link>
               </div>
-              <div className="col-span-1 rounded-xl border-2 border-[#212121] flex flex-col justify-start md:py-2 md:px-2 lg:py-3">
+              <div className="col-span-1 rounded-xl border-2 border-[#212121] flex flex-col justify-start px-1 py-2 md:p-2 lg:py-3">
                 <div className="">
                   <p className={cn(theme[selected].typography.subHeading, "text-pretty flex gap-2 justify-center items-center mb-1")} style={{ color: theme[selected].secondaryClr }}>
                     <StackIcon fillColor={theme[selected].secondaryClr} />
                     Tech Arsenal</p>
                 </div>
-                <div className="grid grid-cols-5 gap-2 lg:mt-2">
+                <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 lg:mt-2">
                   <ExpressIcon fillColor={theme[selected].techIcn} />
                   <MongoDBIcon />
                   <NodeIcon />
@@ -123,7 +127,9 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
                 </div>
               </div>
               <div className="col-span-1 rounded-xl border-2 border-[#212121] overflow-hidden">
-                <ProjectCard theme={theme} selected={selected} />
+                <a href="https://github.com/Hello-Utkarsh/DrawIt" target="_blank">
+                  <ProjectCard name="DrawIt" description="A browser-based drawing tool for creating, editing, and organizing visual ideas with a simple, intuitive canvas." img="/DrawIt.png" theme={theme} selected={selected} />
+                </a>
               </div>
               <div className="col-span-1 rounded-xl border-2 border-[#212121] flex flex-col justify-center items-center gap-2 lg:gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" color={theme[selected].secondaryClr} fill="none" className="rounded-full p-1 lg:p-2 bg-[#212121] size-5 lg:size-6 xl:size-8">
@@ -163,9 +169,13 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
                 </span>
                 <button onClick={() => setPage('blog')} className="bg-[#212121] w-fit rounded-full p-1 lg:p-2 mt-1 -rotate-35 self-start flex hover:scale-125 transition hover:-rotate-45 cursor-pointer"><ArrowRight /></button>
               </div>
-              <div className="grid grid-cols-2 w-full gap-4">
-                <BlogCard theme={theme} selected={selected} imgSrc="/blog-banner.png" title="Exploring Database Pooling, Caching & Scaling" />
-                <BlogCard theme={theme} selected={selected} imgSrc="/blog-banner.png" title="Exploring Database Pooling, Caching & Scaling" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4">
+                <Link href={"blog/Week 3/Exploring API Performance Optimization - Caching, Query Efficiency & Pagination.md"}>
+                  <BlogCard theme={theme} selected={selected} imgSrc="/Exploring API Performance Optimization.png" title="Exploring API Performance Optimization - Caching, Query Efficiency & Pagination.md" />
+                </Link>
+                <Link href={"blog/Week 2/Exploring Database Pooling, Caching & Scaling.md"}>
+                  <BlogCard theme={theme} selected={selected} imgSrc="/blog-banner.png" title="Exploring Database Pooling, Caching & Scaling" />
+                </Link>
               </div>
             </div>
           </div>
@@ -185,7 +195,7 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
 const BlogCard = ({ imgSrc, title, theme, selected }: any) => {
   return (
     <div className="h-full w-full flex flex-col rounded-xl overflow-hidden border border-gray-500">
-      <Image height={100} width={100} alt="blog banner" src={imgSrc} className="w-full" />
+      <Image height={500} width={500} alt="blog banner" src={imgSrc} className="w-full" />
       <p className={cn(theme[selected].typography.descPara, "tracking-tighter p-1 lg:p-2 xl:px-3 text-pretty flex items-center justify-center h-full")} style={{ color: theme[selected].titleTxt }}>{title}</p>
     </div>
   )
