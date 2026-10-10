@@ -36,15 +36,17 @@ export default function page() {
   const [selected, setSelected] = useState<"dark" | "light">("light");
 
   return (
-    <div className="h-screen w-screen rounded-lg border font-mono scroll-container overflow-scroll" style={{ backgroundColor: theme[selected].patternbgColor }}>
-      <div className="h-full portrait:min-w-3xl w-full overflow-auto relative flex justify-center items-center">
-        <Home selected={selected} setSelected={setSelected} page={page} setPage={setPage} />
-        <Project selected={selected} page={page} setPage={setPage} theme={theme} />
-        <Blog selected={selected} page={page} setPage={setPage} theme={theme} />
+    <div className="h-screen w-screen overflow-hidden portrait:overflow-x-auto portrait:overflow-y-hidden border font-mono scroll-container" style={{ backgroundColor: theme[selected].patternbgColor }}>
+      <div className="h-full w-full portrait:w-[565px] portrait:min-w-[565px] relative flex justify-center items-center">
+        <div className="portrait:w-[calc(100dvh-1.5rem)] portrait:h-[530px] portrait:absolute portrait:top-1/2 portrait:left-1/2 portrait:-translate-x-1/2 portrait:-translate-y-1/2 portrait:-rotate-90 w-full lg:w-9/12 xl:w-8/12 h-[88dvh] lg:h-[84dvh] min-h-[580px] max-h-[760px] relative z-10">
+          <Home selected={selected} setSelected={setSelected} page={page} setPage={setPage} />
+          <Project selected={selected} page={page} setPage={setPage} theme={theme} />
+          <Blog selected={selected} page={page} setPage={setPage} theme={theme} />
+        </div>
       </div>
       <DotPattern
         className={cn(
-          "h-full w-full mask-[radial-gradient(1000px_circle_at_center,white,transparent)]",
+          "h-full w-full mask-[radial-gradient(1000px_circle_at_center,white,transparent)] pointer-events-none",
         )}
       />
       <div>
@@ -58,11 +60,12 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
   return (
     <AnimatePresence mode="wait"> {page === 'home' && (
       <motion.div
-        initial={{ opacity: 0, scale: 2 }}
-        animate={{ opacity: 1, scale: 1, transition: { type: "tween", ease: "easeOut", duration: 1, delay: 0.5 } }}
-        exit={{ opacity: 0, scale: 0.9, y: -40, x: 40 }}
-        transition={{ duration: 1 }}
-        className="portrait:min-h-160 portrait:w-[95vh] portrait:top-[97.5%] portrait:translate-x-[5%] portrait:left-0 portrait:origin-top-left portrait:-rotate-90 absolute lg:h-9/12 lg:w-8/12  grid rounded-xl grid-rows-5 z-10 text-white p-2 gap-3 lg:top-[12.5%] shadow-[0px_4px_16px_rgba(107,114,128,0.3),0px_8px_24px_rgba(107,114,128,0.3),0px_16px_56px_rgba(107,114,128,0.3)]" style={{ backgroundColor: theme[selected].bgColor }}>
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1, transition: { type: "tween", ease: "easeOut", duration: 0.3 } }}
+        exit={{ opacity: 0, scale: 0.96 }}
+        transition={{ duration: 0.2 }}
+        className="w-full h-full grid rounded-xl grid-rows-5 z-10 text-white p-2.5 gap-2.5 lg:gap-3 shadow-[0px_4px_16px_rgba(107,114,128,0.3),0px_8px_24px_rgba(107,114,128,0.3),0px_16px_56px_rgba(107,114,128,0.3)] relative overflow-hidden"
+        style={{ backgroundColor: theme[selected].bgColor }}>
         <div className="grid grid-cols-5 gap-2 lg:gap-3 row-span-3">
           <div className="grid col-span-4 grid-rows-2 gap-2 lg:gap-3">
             <div className="grid grid-cols-4 gap-3">
@@ -159,31 +162,33 @@ function Home({ selected, setSelected, page, setPage }: { selected: 'dark' | 'li
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-5 gap-3 row-span-2">
-          <div className="col-span-3 relative rounded-xl border-2 border-[#212121] py-4 flex flex-col justify-between">
-            <div className="flex px-5 gap-6 h-full w-full">
-              <div className="w-fit flex flex-col justify-between">
-                <span className="">
-                  <p className="text-xs font-semibold" style={{ color: theme[selected].secondaryText }}>Showcase</p>
+        <div className="grid grid-cols-5 gap-2.5 lg:gap-3 row-span-2 min-h-0">
+          <div className="col-span-3 relative rounded-xl border-2 border-[#212121] p-2.5 lg:p-3 flex flex-col justify-between overflow-hidden">
+            <div className="flex px-1.5 lg:px-3 gap-3 lg:gap-5 h-full w-full items-center">
+              <div className="w-fit flex flex-col justify-between h-full py-1 shrink-0">
+                <span>
+                  <p className="text-[11px] lg:text-xs font-semibold" style={{ color: theme[selected].secondaryText }}>Showcase</p>
                   <p className={cn(theme[selected].typography.heading)} style={{ color: theme[selected].titleTxt }}>Blogs</p>
                 </span>
-                <button onClick={() => setPage('blog')} className="bg-[#212121] w-fit rounded-full p-1 lg:p-2 mt-1 -rotate-35 self-start flex hover:scale-125 transition hover:-rotate-45 cursor-pointer"><ArrowRight /></button>
+                <button onClick={() => setPage('blog')} className="bg-[#212121] text-white w-fit rounded-full p-1.5 lg:p-2 mt-1 -rotate-35 self-start flex hover:scale-110 transition hover:-rotate-45 cursor-pointer"><ArrowRight className="size-4" /></button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4">
-                <Link href={"blog/Week 3/Exploring API Performance Optimization - Caching, Query Efficiency & Pagination.md"}>
-                  <BlogCard theme={theme} selected={selected} imgSrc="/Exploring API Performance Optimization.png" title="Exploring API Performance Optimization - Caching, Query Efficiency & Pagination.md" />
+              <div className="grid grid-cols-2 w-full gap-2.5 lg:gap-3.5 h-full">
+                <Link href={"/blog/Week 3/Exploring API Performance Optimization - Caching, Query Efficiency & Pagination.md"} className="h-full block">
+                  <BlogCard theme={theme} selected={selected} imgSrc="/Exploring API Performance Optimization.png" title="Exploring API Performance Optimization - Caching, Query Efficiency & Pagination" />
                 </Link>
-                <Link href={"blog/Week 2/Exploring Database Pooling, Caching & Scaling.md"}>
+                <Link href={"/blog/Week 2/Exploring Database Pooling, Caching & Scaling.md"} className="h-full block">
                   <BlogCard theme={theme} selected={selected} imgSrc="/blog-banner.png" title="Exploring Database Pooling, Caching & Scaling" />
                 </Link>
               </div>
             </div>
           </div>
-          <div className="col-span-2 rounded-xl border-2 border-[#212121] px-5 py-4 flex flex-col justify-center">
-            <p className="text-xs" style={{ color: theme[selected].titleTxt }}>Say Hello👋</p>
-            <p className={cn(theme[selected].typography.heading, "mt-4")} style={{ color: theme[selected].titleTxt }}>Let's Work Together</p>
-            <p className={cn(theme[selected].typography.descPara, "mt-1")} style={{ color: theme[selected].secondaryText }}>Lets create something unique together! I'm excited to collaborate</p>
-            <button className="bg-[#212121] w-fit rounded-full p-1 lg:p-2 mt-2 -rotate-35 self-end flex hover:scale-125 transition hover:-rotate-45 cursor-pointer"><ArrowRight /></button>
+          <div className="col-span-2 rounded-xl border-2 border-[#212121] px-4 py-2.5 lg:px-5 lg:py-3 flex flex-col justify-between overflow-hidden">
+            <div>
+              <p className="text-[11px] lg:text-xs" style={{ color: theme[selected].titleTxt }}>Say Hello👋</p>
+              <p className={cn(theme[selected].typography.heading, "mt-1 lg:mt-2")} style={{ color: theme[selected].titleTxt }}>Let's Work Together</p>
+              <p className={cn(theme[selected].typography.descPara, "mt-1 line-clamp-2")} style={{ color: theme[selected].secondaryText }}>Lets create something unique together! I'm excited to collaborate</p>
+            </div>
+            <button className="bg-[#212121] text-white w-fit rounded-full p-1.5 lg:p-2 -rotate-35 self-end flex hover:scale-110 transition hover:-rotate-45 cursor-pointer"><ArrowRight className="size-4" /></button>
           </div>
         </div>
       </motion.div>)
@@ -196,7 +201,7 @@ const BlogCard = ({ imgSrc, title, theme, selected }: any) => {
   return (
     <div className="h-full w-full flex flex-col rounded-xl overflow-hidden border border-gray-500">
       <Image height={500} width={500} alt="blog banner" src={imgSrc} className="w-full" />
-      <p className={cn(theme[selected].typography.descPara, "tracking-tighter p-1 lg:p-2 xl:px-3 text-pretty flex items-center justify-center h-full")} style={{ color: theme[selected].titleTxt }}>{title}</p>
+      <p className={cn(theme[selected].typography.descPara, "tracking-tighter p-1 xl:px-3 text-pretty flex items-start mt-2 justify-center h-full")} style={{ color: theme[selected].titleTxt }}>{title}</p>
     </div>
   )
 }
